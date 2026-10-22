@@ -28,6 +28,8 @@ const browser = await chromium.launch({
 for (const shot of shots) {
   const [width, height] = shot.size ?? [1600, 900];
   const page = await browser.newPage({ viewport: { width, height } });
+  // Reduced motion makes the camera jump to the hotspot view, so shots are deterministic.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto(base, { waitUntil: 'load' });
   await page.locator('#tour').scrollIntoViewIfNeeded();
   await page.addStyleTag({

@@ -1,0 +1,31 @@
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tab {
+  padding: 10px 20px;
+  border: 1px solid #5d7068;
+  border-radius: 999px;
+  background: transparent;
+  color: #dce5e0;
+  font: 14px/1.2 var(--font-sans);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.tab:hover {
+  background: rgba(246, 242, 234, 0.12);
+}
+
+.tab[aria-selected='true'] {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+}
+
+.tab:focus-visible {
+  outline: 3px solid var(--brass);
+  outline-offset: 2px;
+}

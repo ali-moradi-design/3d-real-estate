@@ -1,0 +1,47 @@
+:root {
+  --ink: #16231f;
+  --paper: #f6f2ea;
+  --sand: #e9e1d2;
+  --brass: #b08a4a;
+  --moss: #2f4a41;
+  --line: #d8cfbd;
+  --muted: #5b6862;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: 'Helvetica Neue', Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font: 16px/1.55 var(--font-sans);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

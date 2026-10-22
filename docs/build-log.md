@@ -4,15 +4,15 @@
 
 Prerequisites (checked in the cloud session):
 
-| Check | Result |
-| --- | --- |
-| git | 2.43.0 |
-| node | v22.22.0 (LTS) |
-| pnpm | 10.28.0 |
-| Playwright | 1.56.1; Chromium launches and renders WebGL (software) |
-| Clean clone of `ali-moradi-design/3d-real-estate` | yes: empty repo, no commits, no local changes |
-| `gh auth status` | FAILS: `GH_TOKEN` is invalid. The GitHub MCP tools work, so reads and pushes are fine through them |
-| `ali-moradi-design/roadmap-portfolio` (private) readable | yes (read through the GitHub MCP tools and the local clone) |
+| Check                                                    | Result                                                                                             |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| git                                                      | 2.43.0                                                                                             |
+| node                                                     | v22.22.0 (LTS)                                                                                     |
+| pnpm                                                     | 10.28.0                                                                                            |
+| Playwright                                               | 1.56.1; Chromium launches and renders WebGL (software)                                             |
+| Clean clone of `ali-moradi-design/3d-real-estate`        | yes: empty repo, no commits, no local changes                                                      |
+| `gh auth status`                                         | FAILS: `GH_TOKEN` is invalid. The GitHub MCP tools work, so reads and pushes are fine through them |
+| `ali-moradi-design/roadmap-portfolio` (private) readable | yes (read through the GitHub MCP tools and the local clone)                                        |
 
 Done:
 

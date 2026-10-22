@@ -1,0 +1,6 @@
+out
+.next
+pnpm-lock.yaml
+public/models
+docs/mockups
+docs/research

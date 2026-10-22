@@ -1,0 +1,38 @@
+.button {
+  display: inline-block;
+  padding: 13px 26px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font: 14px/1.2 var(--font-sans);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.solid {
+  background: #8f6c2f;
+  border-color: #8f6c2f;
+  color: #fff;
+}
+
+.solid:hover {
+  background: #7a5b27;
+  border-color: #7a5b27;
+}
+
+.ghost {
+  background: transparent;
+  color: inherit;
+}
+
+.ghost:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}

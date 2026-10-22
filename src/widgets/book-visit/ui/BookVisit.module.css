@@ -1,0 +1,49 @@
+.section {
+  padding: 96px 0;
+  background: var(--sand);
+}
+
+.wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: #7a5b27;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.wrap h2 {
+  margin-bottom: 16px;
+  font-size: 44px;
+  line-height: 1.1;
+}
+
+.lead {
+  max-width: 460px;
+  color: #46544e;
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: 56px 0;
+  }
+
+  .wrap {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 0 20px;
+  }
+
+  .wrap h2 {
+    font-size: 32px;
+  }
+}

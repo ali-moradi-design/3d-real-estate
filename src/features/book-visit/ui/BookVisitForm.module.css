@@ -1,0 +1,32 @@
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.form label {
+  display: grid;
+  gap: 6px;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.form input,
+.form select {
+  padding: 15px 18px;
+  border: 1px solid #b9ad96;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font: 16px var(--font-sans);
+}
+
+.form input:focus-visible,
+.form select:focus-visible {
+  outline: 3px solid #8f6c2f;
+  outline-offset: 1px;
+}
+
+.status {
+  color: #4b5a54;
+  font-size: 13px;
+}

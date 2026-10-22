@@ -53,7 +53,11 @@ Pull requests (each: branch, PR, CI, squash merge):
 4. Landing sections: header, hero, building, gallery, booking form, footer with credits.
 5. Tests: Playwright E2E (7 tests), axe (WCAG 2.1 A/AA), Lighthouse CI in the single `ci` job.
 
-Local Lighthouse (software rendering): performance 0.94, accessibility 1, best practices 1, SEO 1.
+Lighthouse (software rendering): local performance 0.94; on the CI runner performance 0.78 (LCP 4.1 s, TBT 370 ms),
+accessibility 1, best practices 1, SEO 1. The 3D scene loads only when the tour is in view, which is what
+kept the CI performance score above the 0.7 gate.
+
+A phone-size pass (iPhone 13 viewport) made the hotspot card compact and put the overlay above the markers.
 
 Left for the roadmap (phase 7): deploy to `/srv/static/3d-real-estate` and the Nginx site file;
 make `ci` a required check in the branch protection settings (needs repository admin rights).

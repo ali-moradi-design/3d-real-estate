@@ -35,6 +35,9 @@ jobs:
         run: pnpm test:e2e
       - name: Lighthouse
         run: pnpm lighthouse
+      - name: Lighthouse summary
+        if: always()
+        run: node scripts/lighthouse-summary.mjs
       - name: Upload test report
         if: failure()
         uses: actions/upload-artifact@v4

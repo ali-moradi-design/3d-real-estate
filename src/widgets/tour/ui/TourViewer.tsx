@@ -44,7 +44,7 @@ export function TourViewer({
           loader.disconnect();
         }
       },
-      { rootMargin: '150px' },
+      { rootMargin: '0px' },
     );
     const visibility = new IntersectionObserver(([entry]) => setInView(!!entry?.isIntersecting));
     loader.observe(el);

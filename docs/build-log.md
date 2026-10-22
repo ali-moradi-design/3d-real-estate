@@ -53,7 +53,7 @@ Pull requests (each: branch, PR, CI, squash merge):
 4. Landing sections: header, hero, building, gallery, booking form, footer with credits.
 5. Tests: Playwright E2E (7 tests), axe (WCAG 2.1 A/AA), Lighthouse CI in the single `ci` job.
 
-Local Lighthouse (software rendering): performance 0.89, accessibility 1, best practices 1, SEO 1.
+Local Lighthouse (software rendering): performance 0.94, accessibility 1, best practices 1, SEO 1.
 
 Left for the roadmap (phase 7): deploy to `/srv/static/3d-real-estate` and the Nginx site file;
 make `ci` a required check in the branch protection settings (needs repository admin rights).

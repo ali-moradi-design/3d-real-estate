@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northlight Residences: mockup</title>
+<style>
+:root{--ink:#16231f;--paper:#f6f2ea;--sand:#e9e1d2;--brass:#b08a4a;--moss:#2f4a41;--line:#d8cfbd}
+*{box-sizing:border-box;margin:0}
+body{font:16px/1.55 "Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--paper)}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.01em}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+nav{position:absolute;inset:0 0 auto;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:24px 48px;color:#fff}
+nav b{font-family:Georgia,serif;font-size:22px;font-weight:400;letter-spacing:.04em}
+nav ul{display:flex;gap:32px;list-style:none;font-size:14px}
+.btn{display:inline-block;padding:13px 26px;border:1px solid currentColor;border-radius:999px;font-size:14px}
+.btn.solid{background:var(--brass);border-color:var(--brass);color:#fff}
+.hero{position:relative;height:760px;color:#fff;background:linear-gradient(180deg,rgba(10,18,15,.55),rgba(10,18,15,.15) 40%,rgba(10,18,15,.75)),url(assets/unit-a.jpg) center/cover;display:flex;align-items:flex-end}
+.hero .wrap{padding-bottom:72px;width:100%}
+.hero small{letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:#e6d4ac}
+.hero h1{font-size:68px;line-height:1.05;max-width:760px;margin:14px 0 20px}
+.hero p{max-width:520px;opacity:.9;margin-bottom:28px}
+.hero .btn+.btn{margin-left:12px}
+.scroll{position:absolute;right:48px;bottom:48px;font-size:12px;letter-spacing:.2em;writing-mode:vertical-rl}
+section{padding:96px 0}
+.eyebrow{letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--brass);margin-bottom:12px}
+h2{font-size:44px;line-height:1.1;margin-bottom:16px}
+.lead{max-width:560px;color:#4b5a54}
+.viewer-sec{background:var(--ink);color:#fff}
+.viewer-sec .lead{color:#b9c6bf}
+.viewer-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:36px}
+.tabs{display:flex;gap:8px}
+.tab{padding:10px 20px;border:1px solid #4b5d56;border-radius:999px;font-size:14px;color:#cdd8d2}
+.tab.on{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.viewer{position:relative;height:620px;border-radius:20px;overflow:hidden;background:url(assets/unit-b.jpg) center/cover}
+.hot{position:absolute;width:34px;height:34px;border-radius:50%;background:rgba(246,242,234,.92);display:grid;place-items:center;font-size:18px;color:var(--ink);box-shadow:0 0 0 8px rgba(246,242,234,.25)}
+.card{position:absolute;width:290px;padding:20px;border-radius:14px;background:rgba(246,242,234,.97);color:var(--ink);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.card h3{font-size:22px;margin-bottom:4px}.card dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px;margin-top:12px}.card dt{color:#6c7a73}
+.hud{position:absolute;left:20px;bottom:20px;display:flex;gap:10px;font-size:13px}
+.hud span{padding:8px 14px;border-radius:999px;background:rgba(22,35,31,.7);backdrop-filter:blur(6px)}
+.unit{position:absolute;right:20px;top:20px;padding:16px 20px;border-radius:14px;background:rgba(22,35,31,.75);font-size:14px;min-width:230px}
+.unit b{font-family:Georgia,serif;font-size:26px;font-weight:400;display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stats div{padding:36px 0;text-align:center}.stats b{font:400 44px Georgia,serif;display:block}.stats span{font-size:13px;color:#6c7a73;letter-spacing:.1em;text-transform:uppercase}
+.amen{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.amen div{padding:28px;border:1px solid var(--line);border-radius:16px;background:#fbf8f2}
+.amen i{font-style:normal;font-size:26px}.amen h3{font-size:22px;margin:14px 0 6px}.amen p{font-size:14px;color:#5b6862}
+.gal{display:grid;grid-template-columns:2fr 1fr 1fr;grid-auto-rows:240px;gap:16px;margin-top:40px}
+.gal div{border-radius:16px;background-size:cover;background-position:center}
+.gal .big{grid-row:span 2}
+.contact{background:var(--sand)}
+.contact .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+form{display:grid;gap:12px}
+input,select{padding:15px 18px;border:1px solid var(--line);border-radius:12px;background:#fff;font:inherit}
+footer{padding:48px 0;background:var(--ink);color:#b9c6bf;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:32px}
+@media (max-width:760px){
+ nav{padding:18px 20px}nav ul{display:none}.wrap{padding:0 20px}
+ .hero{height:680px}.hero h1{font-size:40px}.scroll{display:none}
+ section{padding:56px 0}h2{font-size:32px}
+ .viewer-head{flex-direction:column;align-items:start;gap:20px}
+ .viewer{height:520px}.card{width:240px;left:20px!important;top:auto!important;bottom:70px}.unit{display:none}
+ .stats{grid-template-columns:1fr 1fr}.amen{grid-template-columns:1fr}
+ .gal{grid-template-columns:1fr;grid-auto-rows:200px}.gal .big{grid-row:auto}
+ .contact .wrap{grid-template-columns:1fr;gap:32px}footer .wrap{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<header class="hero" id="hero">
+  <nav><b>NORTHLIGHT</b><ul><li>Residences</li><li>Amenities</li><li>Gallery</li><li>Contact</li></ul><span class="btn">Book a visit</span></nav>
+  <div class="wrap">
+    <small>Pre-sale · 24 residences · Harbor District</small>
+    <h1>Walk through your home before it exists.</h1>
+    <p>Step inside two Northlight residences in 3D. Tap a hotspot to see materials, sizes and the price of each unit.</p>
+    <span class="btn solid">Explore the residences</span><span class="btn">Book a visit</span>
+  </div>
+  <div class="scroll">SCROLL</div>
+</header>
+
+<section class="viewer-sec" id="viewer">
+  <div class="wrap">
+    <div class="viewer-head">
+      <div><div class="eyebrow">Interactive tour</div><h2>Step inside.</h2><p class="lead">Drag to look around. Select a hotspot for details.</p></div>
+      <div class="tabs"><span class="tab">Unit A · Loft</span><span class="tab on">Unit B · Two-bedroom</span></div>
+    </div>
+    <div class="viewer" id="viewer-frame">
+      <div class="hot" style="left:28%;top:62%">+</div>
+      <div class="hot" style="left:64%;top:44%">+</div>
+      <div class="hot" style="left:46%;top:30%">+</div>
+      <div class="card" style="left:calc(28% + 30px);top:calc(62% - 150px)">
+        <small style="letter-spacing:.15em;color:#b08a4a">HOTSPOT 1 OF 3</small>
+        <h3>Dark oak flooring</h3>
+        <p style="font-size:14px;color:#5b6862">Engineered oak, matte finish, underfloor heating throughout.</p>
+        <dl><dt>Material</dt><dd>Oak, 14 mm</dd><dt>Area</dt><dd>38 m²</dd><dt>Upgrade</dt><dd>+ $2,400</dd></dl>
+      </div>
+      <div class="unit"><small style="color:#b9c6bf">UNIT B · 3rd FLOOR</small><b>$412,000</b>86 m² · 2 bed · 1 bath<br>Available · Sept 2027</div>
+      <div class="hud"><span>Drag to look</span><span>Floor: 3</span><span>Sound off</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">The building</div><h2>Twenty-four residences, one quiet block.</h2>
+    <p class="lead">Light-filled apartments from 42 to 120 m², above a shared garden courtyard.</p>
+    <div class="stats" style="margin-top:48px"><div><b>24</b><span>Residences</span></div><div><b>42–120</b><span>Square meters</span></div><div><b>6</b><span>Floors</span></div><div><b>Q3 2027</b><span>Handover</span></div></div>
+    <div class="amen">
+      <div><i>☀</i><h3>Rooftop garden</h3><p>Shared terrace with city views and a summer kitchen.</p></div>
+      <div><i>♨</i><h3>Wellness room</h3><p>Sauna, plunge pool and a quiet lounge for residents.</p></div>
+      <div><i>⚡</i><h3>Smart and efficient</h3><p>Heat pumps, solar roof and EV charging in the garage.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Gallery</div><h2>Rooms, up close.</h2>
+    <div class="gal">
+      <div class="big" style="background-image:url(assets/unit-a.jpg)"></div>
+      <div style="background-image:url(assets/unit-b.jpg)"></div>
+      <div style="background-image:url(assets/anex-room.jpg)"></div>
+      <div style="background-image:url(assets/unit-b.jpg);background-position:right"></div>
+      <div style="background-image:url(assets/unit-a.jpg);background-position:left"></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div><div class="eyebrow">Book a visit</div><h2>See it in person.</h2><p class="lead">Tour the show apartment and meet the team. Visits take about 30 minutes.</p></div>
+    <form><input placeholder="Full name"><input placeholder="Email"><select><option>Preferred unit: Unit B · Two-bedroom</option></select><span class="btn solid" style="text-align:center">Request a visit</span></form>
+  </div>
+</section>
+<footer><div class="wrap"><span>© 2026 Northlight Residences. A fictional brand for a portfolio demo. No real property is offered.</span><span>3D models and images: see Credits</span></div></footer>
+</body>
+</html>

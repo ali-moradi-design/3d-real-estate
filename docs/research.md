@@ -87,4 +87,4 @@ gets lower DPR and no soft-shadow accumulation.
 3. Models: OK to use Katydid (Unit B) and ChristyHsu (Unit A), both CC-BY?
    You must download the `.glb` files from Sketchfab (login required).
 4. Include the optional 360° panorama view (Poly Haven CC0), or skip it for now?
-5. `gh` is not logged in here (invalid `GH_TOKEN`): see `docs/build-log.md`.
+5. (Resolved) The build used CC0 Poly Haven models; see `docs/build-log.md`.

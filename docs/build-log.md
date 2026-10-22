@@ -31,3 +31,29 @@ Decisions this session: site language English only; graphify is not used in this
 Next: wait for the user's approval of `docs/research.md` section 4, then start the
 first small PR (project scaffold: Next.js 16, TypeScript strict, pnpm, ESLint,
 Prettier, Steiger, CI).
+
+## 2026-10-22: session 2, build (all approved)
+
+Approved by the user: brand "Northlight Residences", the section list, the visual direction.
+
+Deviations from the proposal (and why):
+
+- The two CC-BY Sketchfab models could not be downloaded (the download API needs a login, HTTP 401).
+  Instead the room shell is built in code and the furniture is 11 CC0 Poly Haven models
+  (2.8 MB, Meshopt + WebP). Lighting is procedural, so no HDRI file is shipped. Credits are in
+  `CREDITS.md` and in the page footer. The Sketchfab models can still be added later.
+- Textures are WebP, not KTX2: `toktx` is not available here. `scripts/optimize-models.sh` documents the pipeline.
+- The optional 360° view was left out (no panorama is needed for the two units).
+
+Pull requests (each: branch, PR, CI, squash merge):
+
+1. Scaffold: Next.js 16 static export, TypeScript strict, ESLint, Prettier, Steiger, CI job `ci`.
+2. Models, credits, deploy notes (Nginx: `model/gltf-binary`, long cache).
+3. 3D tour: scene, hotspots, camera moves, unit tabs, posters.
+4. Landing sections: header, hero, building, gallery, booking form, footer with credits.
+5. Tests: Playwright E2E (7 tests), axe (WCAG 2.1 A/AA), Lighthouse CI in the single `ci` job.
+
+Local Lighthouse (software rendering): performance 0.94, accessibility 1, best practices 1, SEO 1.
+
+Left for the roadmap (phase 7): deploy to `/srv/static/3d-real-estate` and the Nginx site file;
+make `ci` a required check in the branch protection settings (needs repository admin rights).

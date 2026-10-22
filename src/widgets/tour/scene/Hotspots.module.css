@@ -29,7 +29,7 @@
 }
 
 .marker[data-active='true'] {
-  background: var(--brass);
+  background: #8f6c2f;
   color: #fff;
   box-shadow: 0 0 0 9px rgba(176, 138, 74, 0.35);
   animation: none;

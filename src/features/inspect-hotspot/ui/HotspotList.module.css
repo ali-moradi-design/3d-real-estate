@@ -18,8 +18,8 @@
 }
 
 .item[aria-pressed='true'] {
-  background: var(--brass);
-  border-color: var(--brass);
+  background: #8f6c2f;
+  border-color: #8f6c2f;
   color: #fff;
 }
 

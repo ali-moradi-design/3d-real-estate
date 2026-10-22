@@ -7,11 +7,11 @@ Date: 2026-10-22. Nothing is built yet; this file is the base for the approval.
 All three were copied out of the repo, installed with pnpm, built with Vite and
 opened in Playwright (Chromium, software WebGL). Screenshots are in `docs/research/`.
 
-| Example | Runs | What we take | Notes |
-| --- | --- | --- | --- |
-| `room-with-soft-shadows` | yes, after one fix | Interior scene: `AccumulativeShadows`, `RandomizedLight`, `Environment`, camera easing with `maath` | `maath` is imported but missing from its `package.json`; add it. Ships `r3f-perf` and `leva` for debug only (drop). Room model is 428 KB (Draco/Meshopt already). Soft shadows look noisy under software WebGL; check on a real GPU. |
-| `html-markers` | yes | drei `<Html>` markers with `occlude` and a `geometry` ref so markers hide behind the model | Tiny (one earth model). Pattern only; we restyle markers as hotspots with detail cards. |
-| `sky-dome-with-annotations` | yes | `PanoramaView` idea: inside-out sphere with a photo texture and clickable `<Html>` links | Uses `antd` for the labels (drop). Its two photos have no credit: do not ship them. Optional second view with Poly Haven CC0 panoramas. |
+| Example                     | Runs               | What we take                                                                                        | Notes                                                                                                                                                                                                                                |
+| --------------------------- | ------------------ | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `room-with-soft-shadows`    | yes, after one fix | Interior scene: `AccumulativeShadows`, `RandomizedLight`, `Environment`, camera easing with `maath` | `maath` is imported but missing from its `package.json`; add it. Ships `r3f-perf` and `leva` for debug only (drop). Room model is 428 KB (Draco/Meshopt already). Soft shadows look noisy under software WebGL; check on a real GPU. |
+| `html-markers`              | yes                | drei `<Html>` markers with `occlude` and a `geometry` ref so markers hide behind the model          | Tiny (one earth model). Pattern only; we restyle markers as hotspots with detail cards.                                                                                                                                              |
+| `sky-dome-with-annotations` | yes                | `PanoramaView` idea: inside-out sphere with a photo texture and clickable `<Html>` links            | Uses `antd` for the labels (drop). Its two photos have no credit: do not ship them. Optional second view with Poly Haven CC0 panoramas.                                                                                              |
 
 Stack in the examples: React 19, R3F 9.8, drei 10.7, three 0.186. Our target is
 Next.js 16 (App Router, static export), so the scene is a client component loaded
@@ -29,12 +29,12 @@ with `dynamic(..., { ssr: false })`.
 
 ### Replacement candidates (verified through the Sketchfab API, 2026-10-22)
 
-| Candidate | Author | License | Faces | Downloadable | Use |
-| --- | --- | --- | --- | --- | --- |
-| Modern apartment interior (`400c9069181a4342a7142433dfa3466e`) | Katydid | CC-BY 4.0 | 60 k | yes | Unit B, two-bedroom (living + dining + kitchen) |
-| VR apartment loft interior baked (`54bc929a26094b6cb36f977903fbcd97`) | ChristyHsu | CC-BY 4.0 | 98 k | yes | Unit A, loft with spiral stairs (hero image) |
-| Modern Apartment (`1fbb649cd6624f2bb7b7d6e30c6533a5`) | Visthétique | CC-BY 4.0 | 3 M | yes | Rejected: far too heavy for the web |
-| Loft Bedroom / Sci-Fi Bedroom | dylanheyes | CC-BY 4.0 | 67 k / 430 k | yes | Spare options |
+| Candidate                                                             | Author      | License   | Faces        | Downloadable | Use                                             |
+| --------------------------------------------------------------------- | ----------- | --------- | ------------ | ------------ | ----------------------------------------------- |
+| Modern apartment interior (`400c9069181a4342a7142433dfa3466e`)        | Katydid     | CC-BY 4.0 | 60 k         | yes          | Unit B, two-bedroom (living + dining + kitchen) |
+| VR apartment loft interior baked (`54bc929a26094b6cb36f977903fbcd97`) | ChristyHsu  | CC-BY 4.0 | 98 k         | yes          | Unit A, loft with spiral stairs (hero image)    |
+| Modern Apartment (`1fbb649cd6624f2bb7b7d6e30c6533a5`)                 | Visthétique | CC-BY 4.0 | 3 M          | yes          | Rejected: far too heavy for the web             |
+| Loft Bedroom / Sci-Fi Bedroom                                         | dylanheyes  | CC-BY 4.0 | 67 k / 430 k | yes          | Spare options                                   |
 
 No usable CC0 apartment interior was found (the CC0 search returned only a castle
 and a sculpture). CC-BY is allowed by the brief if credited in `CREDITS.md` and on

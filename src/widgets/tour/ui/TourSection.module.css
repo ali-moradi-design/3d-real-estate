@@ -1,0 +1,115 @@
+.section {
+  padding: 96px 0;
+  background: var(--ink);
+  color: #fff;
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: #d3b06f;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.head h2 {
+  margin-bottom: 12px;
+  font-size: 44px;
+  line-height: 1.1;
+}
+
+.lead {
+  max-width: 520px;
+  color: #c4d0c9;
+}
+
+.summary {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.card {
+  position: absolute;
+  bottom: 70px;
+  left: 20px;
+}
+
+.hud {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.hud span,
+.hud button {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(22, 35, 31, 0.75);
+  color: #fff;
+  font: 13px var(--font-sans);
+  backdrop-filter: blur(6px);
+}
+
+.hud button {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.hud button:focus-visible {
+  outline: 3px solid var(--brass);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: 56px 0;
+  }
+
+  .wrap {
+    padding: 0 20px;
+  }
+
+  .head h2 {
+    font-size: 32px;
+  }
+
+  .summary {
+    top: 12px;
+    right: 12px;
+  }
+
+  .card {
+    right: 12px;
+    bottom: 64px;
+    left: 12px;
+  }
+
+  .hud {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+}

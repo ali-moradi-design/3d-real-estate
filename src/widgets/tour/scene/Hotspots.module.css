@@ -1,0 +1,53 @@
+.marker {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(246, 242, 234, 0.95);
+  color: var(--ink);
+  font: 400 20px/1 var(--font-sans);
+  cursor: pointer;
+  box-shadow: 0 0 0 7px rgba(246, 242, 234, 0.28);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+.marker:hover,
+.marker:focus-visible {
+  transform: scale(1.12);
+}
+
+.marker:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.marker[data-active='true'] {
+  background: var(--brass);
+  color: #fff;
+  box-shadow: 0 0 0 9px rgba(176, 138, 74, 0.35);
+  animation: none;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 6px rgba(246, 242, 234, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 0 11px rgba(246, 242, 234, 0.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker {
+    animation: none;
+    transition: none;
+  }
+}

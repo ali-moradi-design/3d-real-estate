@@ -1,0 +1,33 @@
+.summary {
+  display: grid;
+  gap: 2px;
+  min-width: 230px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  background: rgba(22, 35, 31, 0.78);
+  color: #fff;
+  font-size: 14px;
+  backdrop-filter: blur(6px);
+}
+
+.summary small {
+  color: #c4d0c9;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+}
+
+.summary strong {
+  font: 400 28px var(--font-serif);
+}
+
+@media (max-width: 760px) {
+  .summary {
+    min-width: 0;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .summary strong {
+    font-size: 22px;
+  }
+}

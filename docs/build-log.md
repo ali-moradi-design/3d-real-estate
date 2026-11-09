@@ -61,3 +61,31 @@ A phone-size pass (iPhone 13 viewport) made the hotspot card compact and put the
 
 Left for the roadmap (phase 7): deploy to `/srv/static/3d-real-estate` and the Nginx site file;
 make `ci` a required check in the branch protection settings (needs repository admin rights).
+
+## 2026-11-09: session 3, bugs and performance
+
+Fixed:
+
+- Dev console error "two children with the same key": the unit's scene group and its ready
+  signal shared the key `unit.id`. Keys are now unique.
+- Changing the residence in the booking form kept the hotspot selected on the other unit
+  (both units have a flooring hotspot). The selection is now tied to its unit; new E2E test.
+- GPU memory leak: the floor and sky canvas textures were created again on every unit switch
+  and never freed. They are now drawn once and shared (one GPU upload for the floor).
+
+Performance:
+
+- The scene drew 60 frames a second even when nothing moved. It now renders on demand
+  (`frameloop="demand"`): no frames while idle (measured 0 draw calls in 3 s, before: constant).
+- The shadow map is drawn once per unit instead of on every frame, because the scene is static.
+- Re-renders: the home page is a server component again; only the tour and the booking form
+  share the chosen unit (context). Lights, room, furniture and Environment are memoized, so a
+  hotspot click re-renders only the markers and the camera rig (measured: 0 extra renders of
+  the room, lights and booking form). Before, every click also redrew the Environment cube map.
+- All models of a unit load in one suspend (the room and lights rendered 7 times during load,
+  now once); the other unit's models preload in idle time after the first unit is shown.
+- Shared wall, frame and trim materials; a cached `matchMedia` list in `useMediaQuery`.
+- Camera moves ignore the idle time reported by the first on-demand frame (no jump).
+
+Known: `THREE.Clock: This module has been deprecated` comes from `@react-three/fiber` 9.8.2
+(the latest stable release) with three r186; it is fixed upstream only in the v10 pre-releases.

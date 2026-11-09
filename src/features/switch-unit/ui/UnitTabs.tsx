@@ -1,6 +1,6 @@
 'use client';
 
-import type { KeyboardEvent } from 'react';
+import { memo, type KeyboardEvent } from 'react';
 import { units, type UnitId } from '@/entities/unit';
 import styles from './UnitTabs.module.css';
 
@@ -10,7 +10,7 @@ interface Props {
   panelId: string;
 }
 
-export function UnitTabs({ value, onChange, panelId }: Props) {
+export const UnitTabs = memo(function UnitTabs({ value, onChange, panelId }: Props) {
   const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
     e.preventDefault();
@@ -40,4 +40,4 @@ export function UnitTabs({ value, onChange, panelId }: Props) {
       ))}
     </div>
   );
-}
+});

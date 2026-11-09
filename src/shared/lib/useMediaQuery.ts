@@ -1,16 +1,32 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
+
+// One MediaQueryList per query: getSnapshot runs on every render and must stay cheap.
+const lists = new Map<string, MediaQueryList>();
+
+function getList(query: string): MediaQueryList {
+  let list = lists.get(query);
+  if (!list) {
+    list = window.matchMedia(query);
+    lists.set(query, list);
+  }
+  return list;
+}
 
 /** Subscribes to a CSS media query. Returns `fallback` during server rendering. */
 export function useMediaQuery(query: string, fallback = false): boolean {
-  return useSyncExternalStore(
-    (onChange) => {
-      const mql = window.matchMedia(query);
-      mql.addEventListener('change', onChange);
-      return () => mql.removeEventListener('change', onChange);
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      const list = getList(query);
+      list.addEventListener('change', onChange);
+      return () => list.removeEventListener('change', onChange);
     },
-    () => window.matchMedia(query).matches,
+    [query],
+  );
+  return useSyncExternalStore(
+    subscribe,
+    () => getList(query).matches,
     () => fallback,
   );
 }

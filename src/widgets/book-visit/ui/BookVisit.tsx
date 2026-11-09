@@ -1,13 +1,12 @@
-import type { UnitId } from '@/entities/unit';
+'use client';
+
+import { useSelectedUnit } from '@/entities/unit';
 import { BookVisitForm } from '@/features/book-visit';
 import styles from './BookVisit.module.css';
 
-interface Props {
-  unitId: UnitId;
-  onUnitChange: (id: UnitId) => void;
-}
+export function BookVisit() {
+  const [unitId, setUnitId] = useSelectedUnit();
 
-export function BookVisit({ unitId, onUnitChange }: Props) {
   return (
     <section className={styles.section} id="book" aria-labelledby="book-title">
       <div className={styles.wrap}>
@@ -18,7 +17,7 @@ export function BookVisit({ unitId, onUnitChange }: Props) {
             Tour the show apartment and meet the team. Visits take about 30 minutes.
           </p>
         </div>
-        <BookVisitForm unitId={unitId} onUnitChange={onUnitChange} />
+        <BookVisitForm unitId={unitId} onUnitChange={setUnitId} />
       </div>
     </section>
   );

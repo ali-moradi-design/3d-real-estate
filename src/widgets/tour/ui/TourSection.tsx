@@ -1,43 +1,56 @@
 'use client';
 
-import { useState } from 'react';
-import { getUnit, UnitSummary, type UnitId } from '@/entities/unit';
+import { useCallback, useState } from 'react';
+import { getUnit, UnitSummary, useSelectedUnit, type UnitId } from '@/entities/unit';
 import { HotspotCard, HotspotList } from '@/features/inspect-hotspot';
 import { UnitTabs } from '@/features/switch-unit';
 import type { CameraView } from '../scene/CameraRig';
 import { TourViewer } from './TourViewer';
 import styles from './TourSection.module.css';
 
-interface Props {
+interface TourState {
+  /** The unit this state belongs to. A state of another unit counts as empty. */
   unitId: UnitId;
-  onUnitChange: (id: UnitId) => void;
+  activeId: string | null;
+  goal: CameraView | null;
 }
 
-export function TourSection({ unitId, onUnitChange }: Props) {
+export function TourSection() {
+  const [unitId, setUnitId] = useSelectedUnit();
   const unit = getUnit(unitId);
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const [goal, setGoal] = useState<CameraView | null>(null);
+  const [state, setState] = useState<TourState>({ unitId, activeId: null, goal: null });
+
+  // The unit can also change from the booking form, so the selection is tied to its unit
+  // instead of being reset by the tabs only.
+  const current = state.unitId === unitId ? state : null;
+  const activeId = current?.activeId ?? null;
+  const goal = current?.goal ?? null;
 
   const index = unit.hotspots.findIndex((h) => h.id === activeId);
   const active = index >= 0 ? (unit.hotspots[index] ?? null) : null;
 
-  const select = (id: string) => {
-    const hotspot = unit.hotspots.find((h) => h.id === id);
-    if (!hotspot) return;
-    setActiveId(id);
-    setGoal({ position: hotspot.view.position, target: hotspot.view.target });
-  };
+  const select = useCallback(
+    (id: string) => {
+      const hotspot = unit.hotspots.find((h) => h.id === id);
+      if (!hotspot) return;
+      // A new object starts a new camera move, even for the hotspot already selected.
+      setState({ unitId: unit.id, activeId: id, goal: { ...hotspot.view } });
+    },
+    [unit, setState],
+  );
 
-  const changeUnit = (id: UnitId) => {
-    setActiveId(null);
-    setGoal(null);
-    onUnitChange(id);
-  };
+  const reset = useCallback(() => {
+    setState({ unitId: unit.id, activeId: null, goal: { ...unit.view } });
+  }, [unit, setState]);
 
-  const reset = () => {
-    setActiveId(null);
-    setGoal({ position: unit.view.position, target: unit.view.target });
-  };
+  const close = useCallback(() => {
+    setState((s) => (s.activeId === null ? s : { ...s, activeId: null }));
+  }, [setState]);
+
+  // Called on every drag start: keep the same state object when there is no move to stop.
+  const stopMove = useCallback(() => {
+    setState((s) => (s.goal === null ? s : { ...s, goal: null }));
+  }, [setState]);
 
   return (
     <section className={styles.section} id="tour" aria-labelledby="tour-title">
@@ -50,7 +63,7 @@ export function TourSection({ unitId, onUnitChange }: Props) {
               Drag to look around. Select a hotspot to see materials, sizes and prices.
             </p>
           </div>
-          <UnitTabs value={unitId} onChange={changeUnit} panelId="tour-panel" />
+          <UnitTabs value={unitId} onChange={setUnitId} panelId="tour-panel" />
         </div>
 
         <div id="tour-panel" role="tabpanel" aria-labelledby={`tab-${unit.id}`}>
@@ -59,7 +72,7 @@ export function TourSection({ unitId, onUnitChange }: Props) {
             activeHotspotId={activeId}
             goal={goal}
             onSelectHotspot={select}
-            onUserMove={() => setGoal(null)}
+            onUserMove={stopMove}
           >
             <div className={styles.summary}>
               <UnitSummary unit={unit} />
@@ -69,7 +82,7 @@ export function TourSection({ unitId, onUnitChange }: Props) {
                 hotspot={active}
                 index={index}
                 total={unit.hotspots.length}
-                onClose={() => setActiveId(null)}
+                onClose={close}
               />
             </div>
             <div className={styles.hud}>

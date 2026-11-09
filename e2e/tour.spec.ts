@@ -47,6 +47,31 @@ test.describe('landing page', () => {
     await expect(page.getByLabel('Preferred residence')).toHaveValue('two-bed');
   });
 
+  test('changing the residence in the booking form clears the selected hotspot', async ({
+    page,
+    consoleErrors,
+  }) => {
+    void consoleErrors;
+    await page.goto('/');
+    await page.locator('#tour').scrollIntoViewIfNeeded();
+    await expect(page.locator('[data-ready="true"]')).toBeVisible({ timeout: 90_000 });
+    await page.getByRole('button', { name: 'Oak flooring', exact: true }).click();
+    const card = page.getByRole('region', { name: 'Hotspot details' });
+    await expect(card).toContainText('HOTSPOT 1 OF 3');
+
+    // Both units have a flooring hotspot: it must not stay selected on the other unit.
+    await page.getByLabel('Preferred residence').selectOption('two-bed');
+    await expect(page.getByRole('tab', { name: 'Unit B · Two-bedroom' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+    await expect(card).toContainText('Select a + marker');
+    await expect(page.getByRole('button', { name: 'Oak flooring', exact: true })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    );
+  });
+
   test('the booking form shows a demo confirmation', async ({ page, consoleErrors }) => {
     void consoleErrors;
     await page.goto('/');

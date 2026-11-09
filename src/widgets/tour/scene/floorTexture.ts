@@ -1,7 +1,7 @@
 import { CanvasTexture, RepeatWrapping, SRGBColorSpace } from 'three';
 
 /** Draws a plank floor texture on a canvas, so no texture file is shipped. */
-export function createFloorTexture(repeatX: number, repeatY: number): CanvasTexture {
+function createFloorTexture(): CanvasTexture {
   const size = 1024;
   const canvas = document.createElement('canvas');
   canvas.width = size;
@@ -46,14 +46,13 @@ export function createFloorTexture(repeatX: number, repeatY: number): CanvasText
   const texture = new CanvasTexture(canvas);
   texture.wrapS = RepeatWrapping;
   texture.wrapT = RepeatWrapping;
-  texture.repeat.set(repeatX, repeatY);
   texture.colorSpace = SRGBColorSpace;
   texture.anisotropy = 8;
   return texture;
 }
 
 /** Soft sky gradient for the window pane. */
-export function createSkyTexture(): CanvasTexture {
+function createSkyTexture(): CanvasTexture {
   const canvas = document.createElement('canvas');
   canvas.width = 16;
   canvas.height = 256;
@@ -69,4 +68,27 @@ export function createSkyTexture(): CanvasTexture {
   const texture = new CanvasTexture(canvas);
   texture.colorSpace = SRGBColorSpace;
   return texture;
+}
+
+// Textures are drawn once and kept for the page's lifetime. Each room size gets a clone
+// with its own repeat; clones share the canvas image, so it is uploaded to the GPU once.
+let floorBase: CanvasTexture | null = null;
+const floorBySize = new Map<string, CanvasTexture>();
+let sky: CanvasTexture | null = null;
+
+export function getFloorTexture(repeatX: number, repeatY: number): CanvasTexture {
+  const key = `${repeatX}x${repeatY}`;
+  let texture = floorBySize.get(key);
+  if (!texture) {
+    floorBase ??= createFloorTexture();
+    texture = floorBase.clone();
+    texture.repeat.set(repeatX, repeatY);
+    floorBySize.set(key, texture);
+  }
+  return texture;
+}
+
+export function getSkyTexture(): CanvasTexture {
+  sky ??= createSkyTexture();
+  return sky;
 }

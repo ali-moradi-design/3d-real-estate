@@ -1,18 +1,33 @@
-import { useMemo } from 'react';
-import { DoubleSide } from 'three';
+import { memo } from 'react';
+import { DoubleSide, MeshStandardMaterial } from 'three';
 import type { RoomShape } from '@/entities/unit';
-import { createFloorTexture, createSkyTexture } from './floorTexture';
+import { getFloorTexture, getSkyTexture } from './floorTexture';
 
-const WALL = '#eee8dc';
 const T = 0.12;
 
-/** The room shell: floor, ceiling, walls with a window opening, trim and the sky behind it. */
-export function Room({ room }: { room: RoomShape }) {
-  const { width: W, depth: D, height: H, window: win, rug } = room;
-  const floorMap = useMemo(() => createFloorTexture(W / 2.4, D / 2.4), [W, D]);
-  const sky = useMemo(() => createSkyTexture(), []);
+// Shared by every mesh of every room, created once on first use. Room unmounts on
+// unit switch, so per-mesh JSX materials would be rebuilt each time.
+let materials: {
+  wall: MeshStandardMaterial;
+  frame: MeshStandardMaterial;
+  trim: MeshStandardMaterial;
+} | null = null;
+function getMaterials() {
+  materials ??= {
+    wall: new MeshStandardMaterial({ color: '#eee8dc', roughness: 0.95 }),
+    frame: new MeshStandardMaterial({ color: '#232826', roughness: 0.5, metalness: 0.4 }),
+    trim: new MeshStandardMaterial({ color: '#faf7f1', roughness: 0.8 }),
+  };
+  return materials;
+}
 
-  const wallMat = <meshStandardMaterial color={WALL} roughness={0.95} />;
+/** The room shell: floor, ceiling, walls with a window opening, trim and the sky behind it. */
+export const Room = memo(function Room({ room }: { room: RoomShape }) {
+  const { width: W, depth: D, height: H, window: win, rug } = room;
+  const floorMap = getFloorTexture(W / 2.4, D / 2.4);
+  const sky = getSkyTexture();
+  const { wall, frame, trim } = getMaterials();
+
   const backZ = -D / 2 - T / 2;
   const winW = win.x2 - win.x1;
   const winH = win.head - win.sill;
@@ -31,21 +46,27 @@ export function Room({ room }: { room: RoomShape }) {
       </mesh>
 
       {/* Back wall, built around the window opening so the sun enters through it. */}
-      <mesh position={[(-W / 2 + win.x1) / 2, H / 2, backZ]} castShadow receiveShadow>
+      <mesh
+        position={[(-W / 2 + win.x1) / 2, H / 2, backZ]}
+        castShadow
+        receiveShadow
+        material={wall}
+      >
         <boxGeometry args={[win.x1 + W / 2, H, T]} />
-        {wallMat}
       </mesh>
-      <mesh position={[(win.x2 + W / 2) / 2, H / 2, backZ]} castShadow receiveShadow>
+      <mesh
+        position={[(win.x2 + W / 2) / 2, H / 2, backZ]}
+        castShadow
+        receiveShadow
+        material={wall}
+      >
         <boxGeometry args={[W / 2 - win.x2, H, T]} />
-        {wallMat}
       </mesh>
-      <mesh position={[winCx, win.sill / 2, backZ]} castShadow receiveShadow>
+      <mesh position={[winCx, win.sill / 2, backZ]} castShadow receiveShadow material={wall}>
         <boxGeometry args={[winW, win.sill, T]} />
-        {wallMat}
       </mesh>
-      <mesh position={[winCx, (win.head + H) / 2, backZ]} castShadow receiveShadow>
+      <mesh position={[winCx, (win.head + H) / 2, backZ]} castShadow receiveShadow material={wall}>
         <boxGeometry args={[winW, H - win.head, T]} />
-        {wallMat}
       </mesh>
 
       {/* Sky pane and window frame. */}
@@ -58,43 +79,36 @@ export function Room({ room }: { room: RoomShape }) {
           key={i}
           position={[win.x1 + (winW / mullions) * i, (win.sill + win.head) / 2, -D / 2 - 0.02]}
           castShadow
+          material={frame}
         >
           <boxGeometry args={[0.05, winH, 0.06]} />
-          <meshStandardMaterial color="#232826" roughness={0.5} metalness={0.4} />
         </mesh>
       ))}
       {[win.sill, win.head].map((y) => (
-        <mesh key={y} position={[winCx, y, -D / 2 - 0.02]} castShadow>
+        <mesh key={y} position={[winCx, y, -D / 2 - 0.02]} castShadow material={frame}>
           <boxGeometry args={[winW, 0.05, 0.06]} />
-          <meshStandardMaterial color="#232826" roughness={0.5} metalness={0.4} />
         </mesh>
       ))}
 
-      <mesh position={[-W / 2 - T / 2, H / 2, 0]} castShadow receiveShadow>
+      <mesh position={[-W / 2 - T / 2, H / 2, 0]} castShadow receiveShadow material={wall}>
         <boxGeometry args={[T, H, D]} />
-        {wallMat}
       </mesh>
-      <mesh position={[W / 2 + T / 2, H / 2, 0]} castShadow receiveShadow>
+      <mesh position={[W / 2 + T / 2, H / 2, 0]} castShadow receiveShadow material={wall}>
         <boxGeometry args={[T, H, D]} />
-        {wallMat}
       </mesh>
-      <mesh position={[0, H / 2, D / 2 + T / 2]} receiveShadow>
+      <mesh position={[0, H / 2, D / 2 + T / 2]} receiveShadow material={wall}>
         <boxGeometry args={[W, H, T]} />
-        {wallMat}
       </mesh>
 
       {/* Baseboards. */}
-      <mesh position={[0, 0.06, -D / 2 + 0.01]}>
+      <mesh position={[0, 0.06, -D / 2 + 0.01]} material={trim}>
         <boxGeometry args={[W, 0.12, 0.02]} />
-        <meshStandardMaterial color="#faf7f1" roughness={0.8} />
       </mesh>
-      <mesh position={[-W / 2 + 0.01, 0.06, 0]}>
+      <mesh position={[-W / 2 + 0.01, 0.06, 0]} material={trim}>
         <boxGeometry args={[0.02, 0.12, D]} />
-        <meshStandardMaterial color="#faf7f1" roughness={0.8} />
       </mesh>
-      <mesh position={[W / 2 - 0.01, 0.06, 0]}>
+      <mesh position={[W / 2 - 0.01, 0.06, 0]} material={trim}>
         <boxGeometry args={[0.02, 0.12, D]} />
-        <meshStandardMaterial color="#faf7f1" roughness={0.8} />
       </mesh>
 
       {/* Rug. */}
@@ -112,4 +126,4 @@ export function Room({ room }: { room: RoomShape }) {
       ))}
     </group>
   );
-}
+});

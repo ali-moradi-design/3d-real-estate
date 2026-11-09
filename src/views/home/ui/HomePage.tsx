@@ -1,7 +1,4 @@
-'use client';
-
-import { useState } from 'react';
-import type { UnitId } from '@/entities/unit';
+import { SelectedUnitProvider } from '@/entities/unit';
 import { BookVisit } from '@/widgets/book-visit';
 import { Building } from '@/widgets/building';
 import { Gallery } from '@/widgets/gallery';
@@ -10,19 +7,21 @@ import { SiteFooter } from '@/widgets/site-footer';
 import { SiteHeader } from '@/widgets/site-header';
 import { TourSection } from '@/widgets/tour';
 
+// A server component: only the tour and the booking form are interactive.
+// They share the chosen residence through SelectedUnitProvider, so changing it
+// re-renders those two sections and nothing else.
 export function HomePage() {
-  // The chosen residence is shared by the tour and the booking form.
-  const [unitId, setUnitId] = useState<UnitId>('loft');
-
   return (
     <>
       <SiteHeader />
       <main id="top">
         <Hero />
-        <TourSection unitId={unitId} onUnitChange={setUnitId} />
-        <Building />
-        <Gallery />
-        <BookVisit unitId={unitId} onUnitChange={setUnitId} />
+        <SelectedUnitProvider>
+          <TourSection />
+          <Building />
+          <Gallery />
+          <BookVisit />
+        </SelectedUnitProvider>
       </main>
       <SiteFooter />
     </>
